@@ -1,0 +1,55 @@
+input[type=email],
+input[type=password],
+input[type=text] {
+  border: 1px rgba(232, 232, 225, 0.75) solid;
+  padding: 0.5rem 1rem;
+  font-size: 24px;
+  width: 100%;
+  font-weight: 200;
+  color: #3d3f4a;
+  line-height: 1.5;
+  border-radius: 10px;
+  outline: none;
+  margin: 2px;
+}
+
+input[type=email]::-webkit-input-placeholder, input[type=password]::-webkit-input-placeholder, input[type=text]::-webkit-input-placeholder {
+  color: #aca6a5;
+  font-size: 20px;
+}
+
+input[type=email]::-moz-placeholder, input[type=password]::-moz-placeholder, input[type=text]::-moz-placeholder {
+  color: #aca6a5;
+  font-size: 20px;
+}
+
+input[type=email]:-ms-input-placeholder, input[type=password]:-ms-input-placeholder, input[type=text]:-ms-input-placeholder {
+  color: #aca6a5;
+  font-size: 20px;
+}
+
+input[type=email]::-ms-input-placeholder, input[type=password]::-ms-input-placeholder, input[type=text]::-ms-input-placeholder {
+  color: #aca6a5;
+  font-size: 20px;
+}
+
+input[type=email]::placeholder,
+input[type=password]::placeholder,
+input[type=text]::placeholder {
+  color: #aca6a5;
+  font-size: 20px;
+}
+
+
+label {
+  display: block;
+  padding: 0.2rem;
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+.pointer:hover {
+  color: #000;
+}
