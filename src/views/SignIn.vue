@@ -29,6 +29,10 @@
               class="form-control"
             />
           </div>
+          <div class="form-group form-check">
+            <input type="checkbox" class="form-check-input" id="role" />
+            <label class="form-check-label" for="role">Я врач</label>
+          </div>
           <div class="form-group mt-4 text-center">
             <button type="submit" class="btn-lg btn-outline-primary">
               Войти
