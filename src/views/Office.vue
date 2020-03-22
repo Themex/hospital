@@ -13,7 +13,7 @@
           >Личная информация</a
         >
       </li>
-      <li class="nav-item">
+      <li class="nav-item" v-if="profile.isDoctor">
         <a
           class="nav-link"
           id="patients-tab"
@@ -25,7 +25,7 @@
           >Пациенты</a
         >
       </li>
-      <li class="nav-item">
+      <li class="nav-item" v-if="profile.isDoctor">
         <a
           class="nav-link"
           id="schedule-tab"
@@ -37,7 +37,7 @@
           >График приемов</a
         >
       </li>
-      <li class="nav-item">
+      <li class="nav-item" v-if="!profile.isDoctor">
         <a
           class="nav-link"
           id="appointment-tab"
@@ -49,7 +49,7 @@
           >Запись на прием</a
         >
       </li>
-      <li class="nav-item">
+      <li class="nav-item" v-if="!profile.isDoctor">
         <a
           class="nav-link"
           id="diagnose-tab"
@@ -74,6 +74,7 @@
           :form-data="userData"
           :method-name="updateInfo"
           :for-office="true"
+          :is-profile="true"
           :content-start="true"
           sign-up-label="Обновить"
         ></user-form>
@@ -83,6 +84,7 @@
         id="patients"
         role="tabpanel"
         aria-labelledby="patients-tab"
+        v-if="profile.isDoctor"
       >
         <hospital-table :items="patients"></hospital-table>
       </div>
@@ -91,6 +93,7 @@
         id="schedule"
         role="tabpanel"
         aria-labelledby="schedule-tab"
+        v-if="profile.isDoctor"
       >
         <hospital-table :items="appointments"></hospital-table>
       </div>
@@ -99,6 +102,7 @@
         id="appointment"
         role="tabpanel"
         aria-labelledby="appointment-tab"
+        v-if="!profile.isDoctor"
       >
         <div class="row align-items-center justify-content-center my-4">
           <div class="col-sm-8 offset-sm-4">
@@ -145,8 +149,9 @@
         id="diagnose"
         role="tabpanel"
         aria-labelledby="diagnose-tab"
+        v-if="!profile.isDoctor"
       >
-        <h3 class="my-4">Cerebral paralysing</h3>
+        <h3 class="my-4">{{ profile.data.diagnose }}</h3>
       </div>
     </div>
   </div>

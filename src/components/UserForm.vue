@@ -111,7 +111,7 @@
             <option :value="1">Анусолог</option>
           </select>
         </div>
-        <div v-else-if="forOffice" class="form-group">
+        <div v-else-if="forOffice && !isProfile" class="form-group">
           <label for="user_diagnose">
             Диагноз
           </label>
@@ -129,6 +129,7 @@
             class="form-check-input"
             id="role"
             v-model="formData.role"
+            :disabled="forOffice"
           />
           <label class="form-check-label" for="role">Я врач</label>
         </div>
@@ -153,6 +154,7 @@ export default {
       type: Boolean,
       default: false
     },
+    isProfile: Boolean,
     signUpLabel: {
       type: String,
       default: "Регистрация"
