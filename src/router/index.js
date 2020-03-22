@@ -37,12 +37,12 @@ const routes = [
   {
     path: "/news",
     name: "News",
-    component: () => import("../views/News")
+    component: () => import("../views/News.vue")
   },
   {
     path: "/catalog",
     name: "Catalog",
-    component: () => import("../views/Catalog")
+    component: () => import("../views/Catalog.vue")
   },
   {
     path: "/signIn",
