@@ -71,8 +71,9 @@
       >
         <user-form
           class="my-4"
-          :form-data="infoData"
+          :form-data="userData"
           :method-name="updateInfo"
+          :for-office="true"
           :content-start="true"
           sign-up-label="Обновить"
         ></user-form>
@@ -154,9 +155,11 @@
 <script>
 import UserForm from "@/components/UserForm";
 import HospitalTable from "@/components/HospitalTable";
+import { mapGetters, mapMutations } from "vuex";
+
 export default {
   components: { HospitalTable, UserForm },
-  data() {
+  data: () => {
     return {
       infoData: {},
       patientId: 1,
@@ -191,8 +194,26 @@ export default {
       }
     };
   },
+  computed: {
+    ...mapGetters(["profile"]),
+    userData: {
+      get() {
+        return this.profile.data || this.infoData;
+      },
+      set(n) {
+        this.infoData = n;
+      }
+    }
+  },
   methods: {
-    updateInfo() {}
+    ...mapMutations(["updateProfile"]),
+    updateInfo() {
+      this.updateProfile({
+        isDoctor: this.profile.isDoctor,
+        data: this.infoData
+      });
+      console.log(this.profile);
+    }
   }
 };
 </script>

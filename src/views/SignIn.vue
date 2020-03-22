@@ -3,6 +3,9 @@
     <div class="col-sm-8 offset-sm-4">
       <div class="hospital-form-container">
         <form autocomplete="on" @submit.prevent="auth" method="post">
+          <div v-if="error" class="alert alert-danger" role="alert">
+            {{ error }}
+          </div>
           <div class="form-group">
             <label for="email">
               Email
@@ -30,7 +33,12 @@
             />
           </div>
           <div class="form-group form-check">
-            <input type="checkbox" class="form-check-input" id="role" />
+            <input
+              v-model="formData.isDoctor"
+              type="checkbox"
+              class="form-check-input"
+              id="role"
+            />
             <label class="form-check-label" for="role">Я врач</label>
           </div>
           <div class="form-group mt-4 text-center">
@@ -44,21 +52,39 @@
   </div>
 </template>
 <script>
+import { mapGetters, mapMutations } from "vuex";
 export default {
   data() {
     return {
       formData: {
         email: "",
-        password: ""
-      }
+        password: "",
+        isDoctor: false
+      },
+      error: ""
     };
   },
+  computed: {
+    ...mapGetters(["api"])
+  },
   methods: {
+    ...mapMutations(["updateProfile"]),
     auth() {
+      this.error = "";
       return this.$http
-        .post("http://84.201.185.226:1488/v1/login/doctor", this.formData)
+        .post(
+          this.formData.isDoctor ? this.api.loginDoctor : this.api.loginPatient,
+          this.formData
+        )
         .then(response => {
-          console.log(response);
+          this.updateProfile({
+            isDoctor: this.formData.isDoctor,
+            data: { role: this.formData.isDoctor, ...response.data }
+          });
+          this.$router.push("/office");
+        })
+        .catch(reason => {
+          this.error = reason;
         });
     }
   }

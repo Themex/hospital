@@ -1,6 +1,17 @@
 <template>
   <form autocomplete="off" @submit.prevent="methodName" method="post">
     <div
+      v-if="error"
+      :class="[
+        'alert',
+        'alert-danger',
+        contentStart ? 'text-left' : 'text-center'
+      ]"
+      role="alert"
+    >
+      {{ error }}
+    </div>
+    <div
       :class="[
         'row',
         contentStart ? 'justify-content-start' : 'justify-content-center'
@@ -94,13 +105,13 @@
           </label>
           <select
             id="specialization"
-            v-model="formData.specialization"
+            v-model="formData.specializationId"
             class="custom-select custom-select-lg mb-2"
           >
             <option :value="1">Анусолог</option>
           </select>
         </div>
-        <div v-else class="form-group">
+        <div v-else-if="forOffice" class="form-group">
           <label for="user_diagnose">
             Диагноз
           </label>
@@ -137,6 +148,11 @@ export default {
   props: {
     formData: Object,
     methodName: Function,
+    error: Boolean,
+    forOffice: {
+      type: Boolean,
+      default: false
+    },
     signUpLabel: {
       type: String,
       default: "Регистрация"

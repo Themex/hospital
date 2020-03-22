@@ -3,8 +3,24 @@ import VueRouter from "vue-router";
 import Home from "../views/Home.vue";
 import SignIn from "../views/SignIn.vue";
 import SignUp from "../views/SignUp.vue";
+import store from "../store";
 
 Vue.use(VueRouter);
+
+const isNotAuthenticated = (to, from, next) => {
+  if (!store.getters.isAuthenticated) {
+    next();
+    return;
+  }
+  next("/");
+};
+const isAuthenticated = (to, from, next) => {
+  if (store.getters.isAuthenticated) {
+    next();
+    return;
+  }
+  next("/signin");
+};
 
 const routes = [
   {
@@ -15,7 +31,8 @@ const routes = [
   {
     path: "/office",
     name: "Office",
-    component: () => import("../views/Office.vue")
+    component: () => import("../views/Office.vue"),
+    beforeEnter: isAuthenticated
   },
   {
     path: "/news",
@@ -30,12 +47,14 @@ const routes = [
   {
     path: "/signIn",
     name: "SignIn",
-    component: SignIn
+    component: SignIn,
+    beforeEnter: isNotAuthenticated
   },
   {
     path: "/signup",
     name: "SignUp",
-    component: SignUp
+    component: SignUp,
+    beforeEnter: isNotAuthenticated
   }
 ];
 

@@ -15,14 +15,24 @@
         <router-link to="/catalog" class="p-2 text-dark"
           >Справочник болезней</router-link
         >
-        <router-link to="/office" class="p-2 text-dark"
+        <router-link to="/office" class="p-2 text-dark" v-if="isAuthenticated"
           >Личный кабинет</router-link
         >
-        <router-link to="/signup" class="p-2 text-dark"
+        <router-link to="/signup" class="p-2 text-dark" v-if="!isAuthenticated"
           >Регистрация</router-link
         >
+        <a
+          href="#"
+          v-if="isAuthenticated"
+          @click="userLogout"
+          class="p-2 text-dark"
+          >Выйти</a
+        >
       </nav>
-      <router-link to="/signin" class="btn btn-outline-primary"
+      <router-link
+        v-if="!isAuthenticated"
+        to="/signin"
+        class="btn btn-outline-primary"
         >Войти</router-link
       >
     </div>
@@ -77,3 +87,21 @@
 </template>
 
 <style lang="scss"></style>
+
+<script>
+import { mapActions, mapGetters } from "vuex";
+export default {
+  name: "App",
+  computed: {
+    ...mapGetters(["isAuthenticated"])
+  },
+  methods: {
+    ...mapActions(["logout"]),
+    userLogout() {
+      this.logout().then(() => {
+        this.$router.push("/signin");
+      });
+    }
+  }
+};
+</script>
