@@ -120,7 +120,12 @@
             v-model="formData.diagnose"
             class="custom-select custom-select-lg mb-2"
           >
-            <option :value="1">Анус болит</option>
+            <option
+              v-for="disease in diseases"
+              :key="disease.id"
+              :value="disease.id"
+              >{{ disease.title }}</option
+            >
           </select>
         </div>
         <div class="form-group form-check">
@@ -144,6 +149,7 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 export default {
   name: "UserForm",
   props: {
@@ -160,6 +166,9 @@ export default {
       default: "Регистрация"
     },
     contentStart: Boolean
+  },
+  computed: {
+    ...mapGetters(["diseases"])
   }
 };
 </script>

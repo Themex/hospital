@@ -70,12 +70,12 @@
       <topic
         v-for="piece of news"
         v-bind:key="piece.id"
-        :title="piece.title"
-        :subtitle="piece.subtitle"
-        :link-msg="piece.linkMsg"
-        :msg="piece.msg"
+        :title="piece.createdTime | moment('calendar')"
+        :subtitle="piece.title"
+        :link-msg="'Посмотреть'"
+        :msg="piece.description"
         :is-first="piece.isFirst"
-        :link="piece.link"
+        :link="{ name: 'SingleNews', params: { id: piece.id } }"
       ></topic>
     </div>
   </div>
@@ -83,39 +83,22 @@
 
 <script>
 import Topic from "../components/Topic";
+import { mapActions, mapGetters } from "vuex";
 export default {
   name: "News",
-  data() {
-    return {
-      news: [
-        {
-          id: 1,
-          title: "Corona Extra",
-          subtitle: "No money",
-          linkMsg: "Hey you!",
-          msg: "B2С for free",
-          link: {},
-          isFirst: true
-        },
-        {
-          id: 2,
-          title: "Babushka death",
-          subtitle: "Attack",
-          linkMsg: "Check this out",
-          msg: "Oh la la RIP  "
-        },
-        {
-          id: 3,
-          title: "Pro",
-          subtitle: '$29 <small class="text-muted">/ mo</small>',
-          linkMsg: "Check this out",
-          msg: "We need qualified Personnel"
-        }
-      ]
-    };
+  computed: {
+    ...mapGetters(["news"])
+  },
+  methods: {
+    ...mapActions(["getNews"])
   },
   components: {
     topic: Topic
+  },
+  mounted() {
+    this.getNews().then(data => {
+      console.log(data);
+    });
   }
 };
 </script>

@@ -52,7 +52,7 @@
   </div>
 </template>
 <script>
-import { mapGetters, mapMutations } from "vuex";
+import { mapActions } from "vuex";
 export default {
   data() {
     return {
@@ -64,28 +64,19 @@ export default {
       error: ""
     };
   },
-  computed: {
-    ...mapGetters(["api"])
-  },
   methods: {
-    ...mapMutations(["updateProfile"]),
+    ...mapActions(["signInUser"]),
     auth() {
       this.error = "";
-      return this.$http
-        .post(
-          this.formData.isDoctor ? this.api.loginDoctor : this.api.loginPatient,
-          this.formData
-        )
-        .then(response => {
-          this.updateProfile({
-            isDoctor: this.formData.isDoctor,
-            data: { role: this.formData.isDoctor, ...response.data }
-          });
+      return this.signInUser(this.formData).then(
+        response => {
+          console.log(response);
           this.$router.push("/office");
-        })
-        .catch(reason => {
+        },
+        reason => {
           this.error = reason;
-        });
+        }
+      );
     }
   }
 };

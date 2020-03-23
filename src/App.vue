@@ -96,12 +96,17 @@ export default {
     ...mapGetters(["isAuthenticated"])
   },
   methods: {
-    ...mapActions(["logout"]),
+    ...mapActions(["logout", "getDiseases"]),
     userLogout() {
       this.logout().then(() => {
         this.$router.push("/signin");
       });
     }
+  },
+  created() {
+    this.getDiseases().then(data => {
+      console.log(data);
+    });
   }
 };
 </script>

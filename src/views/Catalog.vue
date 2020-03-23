@@ -9,6 +9,7 @@
               type="search"
               class="form-control"
               id="search-input"
+              v-model="filterDiseases"
               placeholder="Search..."
               aria-label="Search for..."
               autocomplete="off"
@@ -21,42 +22,79 @@
 
       <div class="list-group" id="list-tab" role="tablist">
         <a
-          class="list-group-item list-group-item-action d-flex justify-content-between align-items-center active"
-          id="list-home-list"
+          :class="[
+            'list-group-item',
+            'list-group-item-action',
+            'd-flex',
+            'justify-content-between',
+            'align-items-center'
+          ]"
+          v-for="disease in filteredDiseases"
+          :key="disease.id"
+          :id="'list-' + disease.id + '-list'"
           data-toggle="list"
-          href="#list-home"
+          :href="'#list-' + disease.id"
           role="tab"
-          aria-controls="home"
-          >Anusophobia</a
-        >
-        <a
-          class="list-group-item d-flex list-group-item-action justify-content-between align-items-center"
-          id="list-profile-list"
-          data-toggle="list"
-          href="#list-profile"
-          role="tab"
-          aria-controls="profile"
-          >BiberGayology</a
+          :aria-controls="'list-control-' + disease.id"
+          >{{ disease.title }}</a
         >
       </div>
     </div>
     <div class="col-8">
       <div class="tab-content" id="nav-tabContent">
         <div
-          class="tab-pane fade show active"
-          id="list-home"
+          :class="['tab-pane', 'fade']"
+          v-for="disease in filteredDiseases"
+          :key="disease.id"
+          :id="'list-' + disease.id"
           role="tabpanel"
-          aria-labelledby="list-home-list"
+          :aria-labelledby="'list-' + disease.id + '-list'"
         >
-          ...
+          {{ disease.description }}
         </div>
-        <div
-          class="tab-pane fade"
-          id="list-profile"
-          role="tabpanel"
-          aria-labelledby="list-profile-list"
-        ></div>
       </div>
     </div>
   </div>
 </template>
+
+<script>
+import { mapGetters, mapActions, mapMutations } from "vuex";
+export default {
+  name: "Catalog",
+  computed: {
+    ...mapGetters(["diseases", "filters"]),
+    filteredDiseases() {
+      return this.filterDiseases
+        ? Object.values(this.diseases)
+            .filter(disease =>
+              new RegExp(this.filterDiseases, "i").test(disease.title)
+            )
+            .reduce((acc, curr) => {
+              acc[curr.id] = curr;
+              return acc;
+            }, {})
+        : this.diseases;
+    },
+    filterDiseases: {
+      get() {
+        return this.filters.catalogFilter;
+      },
+      set(n) {
+        this.updateFilter({
+          key: "catalogFilter",
+          value: n
+        });
+      }
+    }
+  },
+  methods: {
+    ...mapActions(["getDiseases"]),
+    ...mapMutations(["updateFilter"])
+  },
+  mounted() {
+    this.getDiseases().then(data => {
+      console.log(data);
+    });
+  }
+};
+</script>

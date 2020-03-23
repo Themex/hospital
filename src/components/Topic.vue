@@ -26,10 +26,10 @@
 export default {
   name: "Topic",
   props: {
-    msg: Object,
+    msg: String,
     linkMsg: String,
-    title: Object,
-    subtitle: Object,
+    title: String,
+    subtitle: String,
     link: Object,
     isFirst: Boolean
   }

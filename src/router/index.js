@@ -40,6 +40,18 @@ const routes = [
     component: () => import("../views/News.vue")
   },
   {
+    path: "/news/open/:id",
+    name: "SingleNews",
+    component: () => import("../views/SingleNews.vue"),
+    props: route => ({ id: route.params.id })
+  },
+  {
+    path: "/patient/:id",
+    name: "Patient",
+    component: () => import("../views/Patient.vue"),
+    props: route => ({ id: route.params.id })
+  },
+  {
     path: "/catalog",
     name: "Catalog",
     component: () => import("../views/Catalog.vue")

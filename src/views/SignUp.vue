@@ -8,7 +8,7 @@
 
 <script>
 import UserForm from "@/components/UserForm";
-import { mapGetters } from "vuex";
+import { mapActions } from "vuex";
 export default {
   name: "SignUp",
   components: { UserForm },
@@ -24,24 +24,19 @@ export default {
       error: false
     };
   },
-  computed: {
-    ...mapGetters(["api"])
-  },
   methods: {
+    ...mapActions(["signUpUser"]),
     signUp() {
       this.error = false;
-      return this.$http
-        .post(
-          this.formData.role ? this.api.signUpDoctor : this.api.signUpPatient,
-          this.formData
-        )
-        .then(response => {
+      return this.signUpUser(this.formData).then(
+        response => {
           console.log(response);
           this.$router.push("/signin");
-        })
-        .catch(reason => {
-          this.error = reason;
-        });
+        },
+        error => {
+          this.error = error;
+        }
+      );
     }
   }
 };
