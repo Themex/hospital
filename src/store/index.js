@@ -7,6 +7,19 @@ import $axios from "@/axios";
 
 Vue.use(Vuex);
 
+const parceArrayToObjectByIdWithTime = (arr, time) =>
+  arr.reduce((acc, curr) => {
+    acc[curr.id] = {
+      ...curr,
+      [time]: new Date(
+        curr[time].splice(0, 3).join(",") +
+          " " +
+          curr[time].splice(0, 3).join(":")
+      )
+    };
+    return acc;
+  }, {});
+
 export default new Vuex.Store({
   plugins: [
     createPersistedState({
@@ -26,7 +39,8 @@ export default new Vuex.Store({
       patientInfo: "info/patient",
       diseasesList: "diseases/list",
       newsList: "news/list",
-      singleNews: "news/get"
+      singleNews: "news/get",
+      doctorAppointments: "appointment/list/doctor"
     },
     filters: {
       catalogFilter: ""
@@ -36,12 +50,14 @@ export default new Vuex.Store({
       isDoctor: false
     },
     diseasesList: {},
-    newsList: {}
+    newsList: {},
+    appointmentsDoctor: {}
   },
   getters: {
     api: state => state.api,
     apiLink: state => state.apiLink,
     profile: state => state.profile,
+    doctorAppointments: state => state.appointmentsDoctor,
     filters: state => state.filters,
     diseases: state => state.diseasesList,
     news: state => state.newsList,
@@ -57,6 +73,9 @@ export default new Vuex.Store({
     updateDiseases(state, payload) {
       state.diseasesList = payload;
     },
+    updateAppointmentsDoctor(state, payload) {
+      state.appointmentsDoctor = payload;
+    },
     updateNews(state, payload) {
       state.newsList = payload;
     }
@@ -71,6 +90,17 @@ export default new Vuex.Store({
           })
           .catch(error => {
             reject(error);
+          });
+      });
+    },
+    getDoctorAppointments({ state, commit }, payload) {
+      return new Promise(resolve => {
+        $axios
+          .post(state.api.doctorAppointments, { doctorId: payload })
+          .then(response => {
+            const data = parceArrayToObjectByIdWithTime(response.data, "time");
+            commit("updateAppointmentsDoctor", data);
+            resolve(data);
           });
       });
     },
@@ -138,17 +168,10 @@ export default new Vuex.Store({
     getNews({ state, commit }) {
       return new Promise(resolve => {
         $axios.post(state.api.newsList).then(response => {
-          const data = response.data.reduce((acc, curr) => {
-            acc[curr.id] = {
-              ...curr,
-              createdTime: new Date(
-                curr.createdTime.splice(0, 3).join(",") +
-                  " " +
-                  curr.createdTime.splice(0, 3).join(":")
-              )
-            };
-            return acc;
-          }, {});
+          const data = parceArrayToObjectByIdWithTime(
+            response.data,
+            "createdTime"
+          );
           commit("updateNews", data);
           resolve(data);
         });

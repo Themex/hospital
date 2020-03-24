@@ -42,7 +42,7 @@
             <label class="form-check-label" for="role">Я врач</label>
           </div>
           <div class="form-group mt-4 text-center">
-            <button type="submit" class="btn-lg btn-outline-primary">
+            <button type="submit" class="btn btn-lg btn-outline-primary">
               Войти
             </button>
           </div>

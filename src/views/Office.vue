@@ -135,7 +135,7 @@
                 </div>
                 <input type="hidden" :value="patientId" />
                 <div class="form-group mt-3 text-center">
-                  <button type="submit" class="btn-lg btn-outline-primary">
+                  <button type="submit" class="btn btn-lg btn-outline-primary">
                     Записаться
                   </button>
                 </div>
@@ -160,7 +160,7 @@
 <script>
 import UserForm from "@/components/UserForm";
 import HospitalTable from "@/components/HospitalTable";
-import { mapGetters, mapMutations } from "vuex";
+import { mapGetters, mapMutations, mapActions } from "vuex";
 
 export default {
   components: { HospitalTable, UserForm },
@@ -182,25 +182,23 @@ export default {
             diagnose: "Cerebral paralysing"
           }
         ]
-      },
-      appointments: {
-        head: {
-          id: "#",
-          fio: "ФИО",
-          datetime: "Дата и время"
-        },
-        body: [
-          {
-            id: 1,
-            fio: "Mark",
-            datetime: "2019-05-22 18:15:22"
-          }
-        ]
       }
     };
   },
   computed: {
-    ...mapGetters(["profile"]),
+    ...mapGetters(["profile", "doctorAppointments"]),
+    appointments() {
+      const appointments = this.doctorAppointments;
+      return {
+        head: {
+          id: "#",
+          patientFirstName: "Имя пациента",
+          patientLastName: "Фамилия пациента",
+          time: "Дата и время"
+        },
+        body: appointments
+      };
+    },
     userData: {
       get() {
         return this.profile.data || this.infoData;
@@ -212,12 +210,21 @@ export default {
   },
   methods: {
     ...mapMutations(["updateProfile"]),
+    ...mapActions(["getDoctorAppointments"]),
     updateInfo() {
       this.updateProfile({
         isDoctor: this.profile.isDoctor,
         data: this.infoData
       });
       console.log(this.profile);
+    }
+  },
+  mounted() {
+    if (this.profile.isDoctor) {
+      console.log(this.profile);
+      this.getDoctorAppointments(this.profile.data.id).then(data => {
+        console.log(data);
+      });
     }
   }
 };

@@ -19,7 +19,7 @@
       <button
         @click="$router.go(-1)"
         type="button"
-        class="btn-lg btn-outline-primary"
+        class="btn btn-lg btn-outline-primary"
       >
         Назад
       </button>
