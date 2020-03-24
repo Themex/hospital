@@ -4,7 +4,7 @@
     <chart-container
       ref="cont"
       :default-data="chartData"
-      api_link="http://84.201.185.226:1488/index.html"
+      :api-link="api.neuralPrediction"
       :options="options"
     ></chart-container>
   </div>
@@ -12,6 +12,7 @@
 
 <script>
 import ChartContainer from "@/components/ChartContainer";
+import { mapGetters } from "vuex";
 export default {
   name: "Home",
   components: { ChartContainer },
@@ -23,6 +24,9 @@ export default {
         maintainAspectRatio: false
       }
     };
+  },
+  computed: {
+    ...mapGetters(["api"])
   },
   mounted() {
     this.fillData();

@@ -37,7 +37,8 @@ export default new Vuex.Store({
       newsList: "news/list",
       singleNews: "news/get",
       doctorAppointments: "appointment/list/doctor",
-      patientDiagnoses: "diagnosis/list/patient"
+      patientDiagnoses: "diagnosis/list/patient",
+      neuralPrediction: "neural/predict"
     },
     filters: {
       catalogFilter: ""

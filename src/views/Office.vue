@@ -16,18 +16,6 @@
       <li class="nav-item" v-if="profile.isDoctor">
         <a
           class="nav-link"
-          id="patients-tab"
-          data-toggle="tab"
-          href="#patients"
-          role="tab"
-          aria-controls="patients"
-          aria-selected="false"
-          >Пациенты</a
-        >
-      </li>
-      <li class="nav-item" v-if="profile.isDoctor">
-        <a
-          class="nav-link"
           id="schedule-tab"
           data-toggle="tab"
           href="#schedule"
@@ -78,15 +66,6 @@
           :content-start="true"
           sign-up-label="Обновить"
         ></user-form>
-      </div>
-      <div
-        class="tab-pane fade"
-        id="patients"
-        role="tabpanel"
-        aria-labelledby="patients-tab"
-        v-if="profile.isDoctor"
-      >
-        <hospital-table :items="patients"></hospital-table>
       </div>
       <div
         class="tab-pane fade"
