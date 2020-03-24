@@ -108,7 +108,12 @@
             v-model="formData.specializationId"
             class="custom-select custom-select-lg mb-2"
           >
-            <option :value="1">Анусолог</option>
+            <option
+              v-for="spec in specializations"
+              :key="spec.id"
+              :value="spec.id"
+              >{{ spec.title }}</option
+            >
           </select>
         </div>
         <div v-else-if="forOffice && !isProfile" class="form-group">
@@ -168,7 +173,7 @@ export default {
     contentStart: Boolean
   },
   computed: {
-    ...mapGetters(["diseases"])
+    ...mapGetters(["diseases", "specializations"])
   }
 };
 </script>

@@ -38,7 +38,9 @@ export default new Vuex.Store({
       singleNews: "news/get",
       doctorAppointments: "appointment/list/doctor",
       patientDiagnoses: "diagnosis/list/patient",
-      neuralPrediction: "neural/predict"
+      neuralPrediction: "neural/predict",
+      specialization: "specialization/list",
+      doctorList: "doctor/list"
     },
     filters: {
       catalogFilter: ""
@@ -49,7 +51,9 @@ export default new Vuex.Store({
     },
     diseasesList: {},
     newsList: {},
-    appointmentsDoctor: {}
+    appointmentsDoctor: {},
+    specializations: {},
+    doctorList: {}
   },
   getters: {
     api: state => state.api,
@@ -58,6 +62,8 @@ export default new Vuex.Store({
     doctorAppointments: state => state.appointmentsDoctor,
     filters: state => state.filters,
     diseases: state => state.diseasesList,
+    doctors: state => state.doctorList,
+    specializations: state => state.specializations,
     news: state => state.newsList,
     isAuthenticated: state => !!state.profile.data
   },
@@ -77,6 +83,12 @@ export default new Vuex.Store({
     updateNews(state, payload) {
       state.newsList = payload;
     },
+    updateSpecializations(state, payload) {
+      state.specializations = payload;
+    },
+    updateDoctorList(state, payload) {
+      state.doctorList = payload;
+    },
     addDiagnoses(state, payload) {
       if (state.profile.data) {
         state.profile.data.diagnose = payload;
@@ -84,6 +96,30 @@ export default new Vuex.Store({
     }
   },
   actions: {
+    getDoctors({ state, commit }) {
+      return new Promise(resolve => {
+        $axios.post(state.api.doctorList).then(response => {
+          const data = response.data.reduce((acc, curr) => {
+            acc[curr.id] = curr;
+            return acc;
+          }, {});
+          commit("updateDoctorList", data);
+          resolve(data);
+        });
+      });
+    },
+    getSpecializations({ state, commit }) {
+      return new Promise(resolve => {
+        $axios.post(state.api.specialization).then(response => {
+          const data = response.data.reduce((acc, curr) => {
+            acc[curr.id] = curr;
+            return acc;
+          }, {});
+          commit("updateSpecializations", data);
+          resolve(data);
+        });
+      });
+    },
     getPatientInfo({ state }, payload) {
       return new Promise((resolve, reject) => {
         $axios

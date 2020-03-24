@@ -120,7 +120,7 @@ export default {
     ...mapGetters(["isAuthenticated"])
   },
   methods: {
-    ...mapActions(["logout", "getDiseases"]),
+    ...mapActions(["logout", "getDiseases", "getSpecializations"]),
     userLogout() {
       this.logout().then(() => {
         this.$router.push("/signin");
@@ -129,6 +129,9 @@ export default {
   },
   created() {
     this.getDiseases().then(data => {
+      console.log(data);
+    });
+    this.getSpecializations().then(data => {
       console.log(data);
     });
   }

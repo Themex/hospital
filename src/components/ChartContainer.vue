@@ -30,10 +30,10 @@ export default {
     this.loaded = false;
     try {
       if (this.apiLink) {
-        const { list } = await $axios.post(this.apiLink).then(response => {
+        const list = await $axios.post(this.apiLink).then(response => {
           return typeof response.data === "object" ? response.data : {};
         });
-        this.chartData = list ? list : this.defaultData;
+        this.chartData = Object.keys(list).length ? list : this.defaultData;
       } else {
         this.chartData = await this.defaultData;
       }

@@ -96,7 +96,14 @@
                     id="doctor"
                     class="custom-select custom-select-lg mb-3"
                   >
-                    <option selected>Валера!</option>
+                    <option
+                      v-for="doctor in doctors"
+                      :value="doctor.id"
+                      :key="doctor.id"
+                      selected
+                      >{{ doctor.lastName }} {{ doctor.firstName }} -
+                      {{ doctor.specialization }}</option
+                    >
                   </select>
                 </div>
                 <div class="form-group">
@@ -165,7 +172,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["profile", "doctorAppointments"]),
+    ...mapGetters(["profile", "doctorAppointments", "doctors"]),
     diagnoseTable() {
       const diagnose = this.profile.data.diagnose;
       return {
@@ -199,7 +206,11 @@ export default {
   },
   methods: {
     ...mapMutations(["updateProfile"]),
-    ...mapActions(["getDoctorAppointments", "getPatientDiagnoses"]),
+    ...mapActions([
+      "getDoctorAppointments",
+      "getPatientDiagnoses",
+      "getDoctors"
+    ]),
     updateInfo() {
       this.updateProfile({
         isDoctor: this.profile.isDoctor,
@@ -216,6 +227,9 @@ export default {
       });
     } else {
       this.getPatientDiagnoses(this.profile.data.id).then(data => {
+        console.log(data);
+      });
+      this.getDoctors().then(data => {
         console.log(data);
       });
     }
