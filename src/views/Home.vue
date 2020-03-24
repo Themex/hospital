@@ -1,5 +1,6 @@
 <template>
   <div class="home">
+    <h1>Ситуация по COVID-19</h1>
     <chart-container
       ref="cont"
       :default-data="chartData"

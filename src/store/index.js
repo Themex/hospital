@@ -11,11 +11,7 @@ const parceArrayToObjectByIdWithTime = (arr, time) =>
   arr.reduce((acc, curr) => {
     acc[curr.id] = {
       ...curr,
-      [time]: new Date(
-        curr[time].splice(0, 3).join(",") +
-          " " +
-          curr[time].splice(0, 3).join(":")
-      )
+      [time]: new Date(curr[time].replace(/-/g, "/"))
     };
     return acc;
   }, {});
@@ -127,11 +123,7 @@ export default new Vuex.Store({
         $axios.post(state.api.singleNews, { id: id }).then(response => {
           resolve({
             ...response.data,
-            createdTime: new Date(
-              response.data.createdTime.splice(0, 3).join(",") +
-                " " +
-                response.data.createdTime.splice(0, 3).join(":")
-            )
+            createdTime: new Date(response.data.createdTime.replace(/-/g, "/"))
           });
         });
       });

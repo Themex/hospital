@@ -1,16 +1,16 @@
 <template>
-  <line-chart
+  <bar-chart
     v-if="loaded"
     :options="options"
     :chart-data="chartData"
-  ></line-chart>
+  ></bar-chart>
 </template>
 
 <script>
-import LineChart from "./Chart";
+import BarChart from "./Chart";
 export default {
   name: "ChartContainer",
-  components: { LineChart },
+  components: { BarChart },
   props: {
     api_link: {
       type: String,

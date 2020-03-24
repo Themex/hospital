@@ -1,6 +1,6 @@
 <template>
   <div class="row">
-    <div class="col-4">
+    <div class="col-4 overflow-auto" style="max-height: 300px;">
       <div class="mb-4">
         <div role="search" class="bd-search d-flex align-items-center">
           <span
