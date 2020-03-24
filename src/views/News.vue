@@ -16,14 +16,10 @@
       </ol>
       <div class="carousel-inner">
         <div class="carousel-item active">
-          <img
-            src="../assets/ewscripps.brightspotcdn.jpg"
-            class="d-block w-100"
-            alt="..."
-          />
+          <img src="../assets/44.jpg" class="d-block w-100" alt="..." />
           <div class="carousel-caption d-none d-md-block">
-            <h5>Вкусное пивко!</h5>
-            <p>Раздаем всем пациентам от скуки!</p>
+            <h5>Мойте руки!</h5>
+            <p>Очень важно, чтобы возбудители не попали на слизистые!</p>
           </div>
         </div>
         <div class="carousel-item">
