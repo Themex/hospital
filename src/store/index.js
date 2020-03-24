@@ -37,6 +37,7 @@ export default new Vuex.Store({
       newsList: "news/list",
       singleNews: "news/get",
       doctorAppointments: "appointment/list/doctor",
+      createAppointments: "appointment/create",
       patientDiagnoses: "diagnosis/list/patient",
       neuralPrediction: "neural/predict",
       specialization: "specialization/list",
@@ -96,6 +97,13 @@ export default new Vuex.Store({
     }
   },
   actions: {
+    createAppointment({ state }, payload) {
+      return new Promise(resolve => {
+        $axios.post(state.api.createAppointments, payload).then(response => {
+          resolve(response.data);
+        });
+      });
+    },
     getDoctors({ state, commit }) {
       return new Promise(resolve => {
         $axios.post(state.api.doctorList).then(response => {

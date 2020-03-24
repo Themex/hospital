@@ -86,7 +86,7 @@
         <div class="row align-items-center justify-content-center my-4">
           <div class="col-sm-8 offset-sm-4">
             <div class="hospital-form-container">
-              <form autocomplete="on" method="post">
+              <form @submit.prevent="appoint" autocomplete="on" method="post">
                 <div class="form-group">
                   <label for="doctor">
                     Врач
@@ -119,7 +119,7 @@
                     class="form-control"
                   />
                 </div>
-                <input type="hidden" :value="patientId" />
+                <input type="hidden" v-model="patientId" />
                 <div class="form-group mt-3 text-center">
                   <button type="submit" class="btn btn-lg btn-outline-primary">
                     Записаться
@@ -209,8 +209,21 @@ export default {
     ...mapActions([
       "getDoctorAppointments",
       "getPatientDiagnoses",
-      "getDoctors"
+      "getDoctors",
+      "createAppointment"
     ]),
+    appoint() {
+      this.createAppointment({
+        patientId: this.patientId,
+        doctorId: this.appointmentData.doctor_id,
+        time: new Date(
+          this.appointmentData.datetime.replace(/-/g, "/")
+        ).toISOString()
+      }).then(data => {
+        console.log(data);
+        location.reload();
+      });
+    },
     updateInfo() {
       this.updateProfile({
         isDoctor: this.profile.isDoctor,
