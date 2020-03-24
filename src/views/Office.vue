@@ -151,7 +151,7 @@
         aria-labelledby="diagnose-tab"
         v-if="!profile.isDoctor"
       >
-        <h3 class="my-4">{{ profile.data.diagnose }}</h3>
+        <hospital-table :items="diagnoseTable" />
       </div>
     </div>
   </div>
@@ -187,6 +187,16 @@ export default {
   },
   computed: {
     ...mapGetters(["profile", "doctorAppointments"]),
+    diagnoseTable() {
+      const diagnose = this.profile.data.diagnose;
+      return {
+        head: {
+          id: "#",
+          diseaseTitle: "Диагноз"
+        },
+        body: diagnose
+      };
+    },
     appointments() {
       const appointments = this.doctorAppointments;
       return {
@@ -210,7 +220,7 @@ export default {
   },
   methods: {
     ...mapMutations(["updateProfile"]),
-    ...mapActions(["getDoctorAppointments"]),
+    ...mapActions(["getDoctorAppointments", "getPatientDiagnoses"]),
     updateInfo() {
       this.updateProfile({
         isDoctor: this.profile.isDoctor,
@@ -223,6 +233,10 @@ export default {
     if (this.profile.isDoctor) {
       console.log(this.profile);
       this.getDoctorAppointments(this.profile.data.id).then(data => {
+        console.log(data);
+      });
+    } else {
+      this.getPatientDiagnoses(this.profile.data.id).then(data => {
         console.log(data);
       });
     }

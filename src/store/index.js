@@ -40,7 +40,8 @@ export default new Vuex.Store({
       diseasesList: "diseases/list",
       newsList: "news/list",
       singleNews: "news/get",
-      doctorAppointments: "appointment/list/doctor"
+      doctorAppointments: "appointment/list/doctor",
+      patientDiagnoses: "diagnosis/list/patient"
     },
     filters: {
       catalogFilter: ""
@@ -78,6 +79,11 @@ export default new Vuex.Store({
     },
     updateNews(state, payload) {
       state.newsList = payload;
+    },
+    addDiagnoses(state, payload) {
+      if (state.profile.data) {
+        state.profile.data.diagnose = payload;
+      }
     }
   },
   actions: {
@@ -128,6 +134,20 @@ export default new Vuex.Store({
             )
           });
         });
+      });
+    },
+    getPatientDiagnoses({ state, commit }, id) {
+      return new Promise(resolve => {
+        $axios
+          .post(state.api.patientDiagnoses, { patientId: id })
+          .then(response => {
+            const data = response.data.reduce((acc, curr) => {
+              acc[curr.id] = curr;
+              return acc;
+            }, {});
+            commit("addDiagnoses", data);
+            resolve(data);
+          });
       });
     },
     signUpUser({ state }, payload) {

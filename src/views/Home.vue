@@ -3,7 +3,7 @@
     <chart-container
       ref="cont"
       :default-data="chartData"
-      api_link="http://localhost:8080"
+      api_link="http://84.201.185.226:1488/index.html"
       :options="options"
     ></chart-container>
   </div>

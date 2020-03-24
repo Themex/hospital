@@ -37,8 +37,8 @@
       >
     </div>
     <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
-      <h1 class="display-4">Hospital</h1>
-      <p class="lead">Say NO to CoronaVirus, say YES to Corona Extra.</p>
+      <h1 class="display-4">Инфекционная больница</h1>
+      <p class="lead">№1 в г. Москве</p>
     </div>
     <div class="container">
       <router-view />
@@ -52,32 +52,56 @@
             <small class="d-block mb-3 text-muted">&copy; 2020</small>
           </div>
           <div class="col-6 col-md">
-            <h5>Features</h5>
+            <h5>Коронавирус <span class="badge badge-secondary">New</span></h5>
             <ul class="list-unstyled text-small">
-              <li><a class="text-muted" href="#">Cool stuff</a></li>
-              <li><a class="text-muted" href="#">Random feature</a></li>
-              <li><a class="text-muted" href="#">Team feature</a></li>
-              <li><a class="text-muted" href="#">Stuff for developers</a></li>
-              <li><a class="text-muted" href="#">Another one</a></li>
-              <li><a class="text-muted" href="#">Last time</a></li>
+              <li>
+                <router-link to="/static/spread" class="text-muted"
+                  >Распространение</router-link
+                >
+              </li>
+              <li>
+                <router-link to="/static/prevent" class="text-muted"
+                  >Профилактика</router-link
+                >
+              </li>
+              <li>
+                <router-link to="/static/symptoms" class="text-muted"
+                  >Симптомы</router-link
+                >
+              </li>
+              <li>
+                <a
+                  class="text-muted"
+                  target="_blank"
+                  href="https://gisanddata.maps.arcgis.com/apps/opsdashboard/index.html#/bda7594740fd40299423467b48e9ecf6"
+                  >Мониторинг</a
+                >
+              </li>
             </ul>
           </div>
           <div class="col-6 col-md">
-            <h5>Resources</h5>
+            <h5>О компании</h5>
             <ul class="list-unstyled text-small">
-              <li><a class="text-muted" href="#">Resource</a></li>
-              <li><a class="text-muted" href="#">Resource name</a></li>
-              <li><a class="text-muted" href="#">Another resource</a></li>
-              <li><a class="text-muted" href="#">Final resource</a></li>
-            </ul>
-          </div>
-          <div class="col-6 col-md">
-            <h5>About</h5>
-            <ul class="list-unstyled text-small">
-              <li><a class="text-muted" href="#">Team</a></li>
-              <li><a class="text-muted" href="#">Locations</a></li>
-              <li><a class="text-muted" href="#">Privacy</a></li>
-              <li><a class="text-muted" href="#">Terms</a></li>
+              <li>
+                <router-link to="/static/contacts" class="text-muted"
+                  >Контакты</router-link
+                >
+              </li>
+              <li>
+                <router-link to="/static/about" class="text-muted"
+                  >О нас</router-link
+                >
+              </li>
+              <li>
+                <router-link to="/static/vacancies" class="text-muted"
+                  >Вакансии</router-link
+                >
+              </li>
+              <li>
+                <router-link to="/static/faq" class="text-muted"
+                  >Вопросы</router-link
+                >
+              </li>
             </ul>
           </div>
         </div>
