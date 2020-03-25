@@ -200,7 +200,10 @@ export default {
         return this.profile.data || this.infoData;
       },
       set(n) {
-        this.infoData = n;
+        this.updateProfile({
+          isDoctor: this.profile.isDoctor,
+          data: n
+        });
       }
     }
   },
@@ -221,7 +224,8 @@ export default {
         ).toISOString()
       }).then(data => {
         console.log(data);
-        location.reload();
+        alert("Вы записаны!");
+        this.appointmentData = {};
       });
     },
     updateInfo() {

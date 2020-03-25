@@ -143,7 +143,7 @@
           />
           <label class="form-check-label" for="role">Я врач</label>
         </div>
-        <div class="form-group mt-4 text-center">
+        <div class="form-group mt-4 text-center" v-if="!forOffice">
           <button type="submit" class="btn btn-lg btn-outline-primary">
             {{ signUpLabel }}
           </button>
